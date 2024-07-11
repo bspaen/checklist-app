@@ -9,7 +9,35 @@ function Checklist() {
   const [noteIndex, setNoteIndex] = useState(null);
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleDeleteLastItem = () => {
+      setItems(items.slice(0, -1));
+    };
+    
+    const handleSaveEdit = () => {
+      const newItems = items.map((item, i) => {
+        if (i === editIndex) {
+          return { ...item, text: editText };
+        }
+        return item;
+      });
+      setItems(newItems);
+      setEditIndex(null);
+      setEditText('');
+    };
+
+    const handleSaveNote = () => {
+      const newItems = items.map((item, i) => {
+        if (i === noteIndex) {
+          return { ...item, note: noteText };
+        }
+        return item;
+      });
+      setItems(newItems);
+      setNoteIndex(null);
+      setNoteText('');
+    };
+    
+    function handleKeyDown(event) {
       if (event.key === 'Enter') {
         if (noteIndex !== null) {
           handleSaveNote();
@@ -21,7 +49,7 @@ function Checklist() {
       } else if (event.key === 'Delete') {
         handleDeleteLastItem();
       }
-    };
+    }
 
     window.addEventListener('keydown', handleKeyDown);
     return () => {
@@ -38,10 +66,6 @@ function Checklist() {
 
   const handleResetList = () => {
     setItems([]);
-  };
-
-  const handleDeleteLastItem = () => {
-    setItems(items.slice(0, -1));
   };
 
   const handleCheckItem = (index) => {
@@ -64,33 +88,9 @@ function Checklist() {
     setEditText(items[index].text);
   };
 
-  const handleSaveEdit = () => {
-    const newItems = items.map((item, i) => {
-      if (i === editIndex) {
-        return { ...item, text: editText };
-      }
-      return item;
-    });
-    setItems(newItems);
-    setEditIndex(null);
-    setEditText('');
-  };
-
   const handleAddNote = (index) => {
     setNoteIndex(index);
     setNoteText(items[index].note);
-  };
-
-  const handleSaveNote = () => {
-    const newItems = items.map((item, i) => {
-      if (i === noteIndex) {
-        return { ...item, note: noteText };
-      }
-      return item;
-    });
-    setItems(newItems);
-    setNoteIndex(null);
-    setNoteText('');
   };
 
   const handleItemClick = (index) => {
