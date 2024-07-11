@@ -1,38 +1,129 @@
 .App {
+  font-family: 'Arial', sans-serif;
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #001f3f, #001233);
+  color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  color: #00aaff;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00aaff, 0 0 20px #00aaff, 0 0 30px #00aaff, 0 0 40px #00aaff;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input[type='text'] {
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #00aaff;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 0 10px #00aaff;
+}
+
+input[type='text']::placeholder {
+  color: #00aaff;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #00aaff;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px #00aaff;
+}
+
+button:hover {
+  background-color: #0088cc;
+  box-shadow: 0 0 20px #00aaff;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 400px;
+  margin-top: 20px;
+}
+
+li {
+  background: rgba(0, 26, 51, 0.8);
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0 10px #00aaff;
+}
+
+li input[type='checkbox'] {
+  margin-right: 10px;
+  accent-color: #00aaff;
+}
+
+li button {
+  background-color: transparent;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+li button:hover {
+  color: #ff0000;
+}
+
+li div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+li div input[type='text'] {
+  margin: 0 10px;
+  flex-grow: 1;
+}
+
+.note-input-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.note-input-container input[type='text'] {
+  flex-grow: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #00aaff;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 5px;
+  outline: none;
+  box-shadow: 0 0 10px #00aaff;
+}
+
+.note-input-container button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #00aaff;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 10px #00aaff;
+}
+
+.note-input-container button:hover {
+  background-color: #0088cc;
+  box-shadow: 0 0 20px #00aaff;
 }
