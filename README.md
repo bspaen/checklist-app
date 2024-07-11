@@ -1,3 +1,6 @@
+View the Checklist app here:
+https://bspaen.github.io/checklist-app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
