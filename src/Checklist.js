@@ -23,11 +23,11 @@ function Checklist() {
       }
     };
 
-    document.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [noteIndex, editIndex, items, newItem, noteText, editText]);
+  }, [handleAddItem, handleDeleteLastItem, handleSaveEdit, handleSaveNote]);
 
   const handleAddItem = () => {
     if (newItem.trim() !== '') {
