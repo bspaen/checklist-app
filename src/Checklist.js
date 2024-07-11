@@ -86,6 +86,26 @@ const handleEditItem = useCallback((index) => {
     }));
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        handleAddItem();
+      } else if (event.key === 'Delete') {
+        handleDeleteLastItem();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleAddItem, handleDeleteLastItem]);
+
+  const handleResetList = () => {
+    setItems([]);
+  };
+
   return (
     <div>
       <h1>Checklist</h1>
@@ -96,8 +116,8 @@ const handleEditItem = useCallback((index) => {
         placeholder="Add a new item"
         onKeyDown={(e) => e.key === 'Enter' && handleAddItem()}
       />
-      <button onClick={handleAddItem}>Add</button>
-      <button onClick={handleDeleteLastItem}>Reset List</button>
+      <button onClick={handleAddItem} style={{ marginRight: '10px' }}>Add</button>
+      <button onClick={handleResetList}>Reset List</button>
       <ul>
         {items.map((item, index) => (
           <li
@@ -106,10 +126,13 @@ const handleEditItem = useCallback((index) => {
               display: 'flex',
               alignItems: 'center',
               flexDirection: 'column',
-              padding: '10px',
+              padding: (editIndex === index || noteIndex === index) ? '20px' : '10px',
               border: '1px solid #00aaff',
               marginBottom: '10px',
-              width: '100%'
+              width: '100%',
+              transition: 'all 0.3s ease', // Add transition for smooth border expansion
+              maxHeight: (editIndex === index || noteIndex === index || item.showNote) ? '200px' : '60px', // Temporarily expand border
+              overflow: 'hidden',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
@@ -118,26 +141,34 @@ const handleEditItem = useCallback((index) => {
                 checked={item.checked}
                 onChange={() => handleCheckItem(index)}
               />
-              <span
-                style={{
-                  textDecoration: item.checked ? 'line-through' : 'none',
-                  flexGrow: 1,
-                }}
-                onClick={() => handleItemClick(index)}
-              >
-                {item.text}
-              </span>
+              {editIndex === index ? (
+                <input
+                  type="text"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  style={{ flexGrow: 1 }}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSaveEdit()}
+                />
+              ) : (
+                <span
+                  style={{
+                    textDecoration: item.checked ? 'line-through' : 'none',
+                    flexGrow: 1,
+                  }}
+                  onClick={() => handleItemClick(index)}
+                >
+                  {item.text}
+                </span>
+              )}
               {item.note && <span style={{ marginLeft: '10px', color: '#00aaff' }}>●</span>}
               <button onClick={() => handleDeleteItem(index)}>Delete</button>
               {editIndex === index ? (
-                <button onClick={handleSaveEdit}>Save</button>
+                <button onClick={() => handleSaveEdit()}>Save</button>
               ) : (
                 <button onClick={() => handleEditItem(index)}>Edit</button>
               )}
-              {noteIndex === index ? (
-                <button onClick={handleSaveNote}>Save Note</button>
-              ) : (
-                <button onClick={() => handleAddNote(index)}>Add Note</button>
+              {noteIndex !== index && (
+                <button onClick={() => handleAddNote(index)}>{item.note ? 'Edit Note' : 'Add Note'}</button>
               )}
             </div>
             {noteIndex === index && (
@@ -147,7 +178,9 @@ const handleEditItem = useCallback((index) => {
                   value={noteText}
                   onChange={(e) => setNoteText(e.target.value)}
                   placeholder="Type your note here..."
+                  onKeyDown={(e) => e.key === 'Enter' && handleSaveNote()}
                 />
+                <button onClick={handleSaveNote}>Save Note</button>
               </div>
             )}
             {(item.showNote && noteIndex !== index) && (
