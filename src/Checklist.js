@@ -9,7 +9,7 @@ function Checklist() {
   const [noteIndex, setNoteIndex] = useState(null);
 
   useEffect(() => {
-    const handleKeyPress = (event) => {
+    const handleKeyDown = (event) => {
       if (event.key === 'Enter') {
         if (noteIndex !== null) {
           handleSaveNote();
@@ -29,12 +29,12 @@ function Checklist() {
     };
   }, [handleAddItem, handleDeleteLastItem, handleSaveEdit, handleSaveNote]);
 
-  const handleAddItem = () => {
+  function handleAddItem() {
     if (newItem.trim() !== '') {
       setItems([...items, { text: newItem, checked: false, note: '', showNote: false }]);
       setNewItem('');
     }
-  };
+  }
 
   const handleResetList = () => {
     setItems([]);
